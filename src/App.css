@@ -328,7 +328,8 @@
 
 .pet-info-card,
 .sensor-data-card,
-.stats-card {
+.stats-card,
+.map-card {
   background: white;
   padding: 2rem;
   border-radius: 12px;
@@ -380,6 +381,13 @@
   color: #333;
 }
 
+.sensor-timestamp {
+  display: block;
+  font-size: 0.8rem;
+  color: #999;
+  margin-top: 0.25rem;
+}
+
 .stat-item {
   text-align: center;
   padding: 1rem;
@@ -399,6 +407,130 @@
   font-size: 1.5rem;
   font-weight: bold;
   color: #667eea;
+}
+
+/* Map Styles */
+.pet-map-container h3 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.leaflet-container {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.leaflet-popup-content {
+  text-align: center;
+  font-family: inherit;
+}
+
+.leaflet-popup-content strong {
+  color: #4f46e5;
+  font-size: 1.1rem;
+}
+
+/* Real-time Status */
+.sensor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.connection-status.connected {
+  background: rgba(16, 185, 129, 0.1);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.connection-status.disconnected {
+  background: rgba(239, 68, 68, 0.1);
+  color: #dc2626;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.connection-status svg {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Charts Dashboard */
+.charts-container {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.charts-container h2 {
+  margin: 0 0 2rem 0;
+  color: #1f2937;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+}
+
+.chart-card {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.chart-card h3 {
+  margin: 0 0 1rem 0;
+  color: #374151;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.chart-wrapper {
+  height: 300px;
+  position: relative;
+}
+
+.no-data {
+  text-align: center;
+  padding: 3rem;
+  color: #6b7280;
+}
+
+.no-data p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .chart-wrapper {
+    height: 250px;
+  }
 }
 
 .loading {
@@ -551,6 +683,99 @@
   font-size: 1rem;
 }
 
+/* PWA Install Banner */
+.pwa-install-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  color: white;
+  padding: 1rem;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: slideUp 0.3s ease-out;
+}
+
+.pwa-install-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pwa-install-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.pwa-install-text {
+  flex: 1;
+}
+
+.pwa-install-text h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.pwa-install-text p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.pwa-install-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.pwa-install-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.pwa-install-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.pwa-dismiss-btn {
+  background: none;
+  border: none;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.pwa-dismiss-btn:hover {
+  opacity: 1;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 768px) {
   .dashboard-header {
     flex-direction: column;
@@ -576,5 +801,137 @@
   
   .notification-item {
     padding: 0.75rem;
+  }
+  
+  .pwa-install-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  
+  .pwa-install-actions {
+    justify-content: center;
+  }
+}
+/* Geofence Map Styles */
+.pet-map-container {
+  margin: 20px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.geofence-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.geofence-status.safe {
+  background-color: #10b981;
+  color: white;
+}
+
+.geofence-status.danger {
+  background-color: #ef4444;
+  color: white;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.leaflet-popup-content {
+  margin: 12px 16px;
+  font-family: inherit;
+}
+
+.map-popup-content {
+  text-align: center;
+  min-width: 200px;
+}
+
+.map-popup-content strong {
+  font-size: 16px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.coordinates {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 8px 0;
+  font-family: monospace;
+}
+
+.coordinates div {
+  margin: 2px 0;
+}
+
+.timestamp {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.geofence-info {
+  margin-top: 8px;
+  padding: 6px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.geofence-info.safe {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid #10b981;
+}
+
+.geofence-info.danger {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #ef4444;
+}
+
+/* Mejorar el header del mapa */
+.map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding: 10px 0;
+}
+
+.map-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .map-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .geofence-status {
+    font-size: 11px;
+    padding: 4px 8px;
   }
 }

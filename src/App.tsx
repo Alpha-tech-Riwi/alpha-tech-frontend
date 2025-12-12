@@ -4,7 +4,10 @@ import { useState, useEffect } from 'react';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import PetProfile from './components/PetProfile';
+import FoundPet from './components/FoundPet';
+import PWAInstall from './components/PWAInstall';
 import './App.css';
+import './components/FoundPet.css';
 
 const queryClient = new QueryClient();
 
@@ -26,6 +29,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Router>
         <div className="app">
+          <PWAInstall />
           <header className="app-header">
             <h1>🐾 Alpha Tech</h1>
             <p>Smart Pet Collar & Social Platform</p>
@@ -43,6 +47,10 @@ function App() {
             <Route 
               path="/pet/:id" 
               element={isAuthenticated ? <PetProfile /> : <Navigate to="/login" />} 
+            />
+            <Route 
+              path="/found/:qrCode" 
+              element={<FoundPet />} 
             />
             <Route 
               path="/" 

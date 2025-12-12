@@ -1,7 +1,10 @@
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { petsAPI, sensorAPI, locationAPI } from '../lib/api';
-import { ArrowLeft, Heart, Thermometer, MapPin, Activity, Battery } from 'lucide-react';
+import { ArrowLeft, Heart, Thermometer, MapPin, Activity, Battery, Wifi, WifiOff } from 'lucide-react';
+import PetMap from './PetMap';
+import PetCharts from './PetCharts';
+import { useRealTimeData } from '../hooks/useRealTimeData';
 
 export default function PetProfile() {
   const { id } = useParams<{ id: string }>();
@@ -26,8 +29,13 @@ export default function PetProfile() {
   const { data: locationData } = useQuery({
     queryKey: ['pet-location', id],
     queryFn: () => locationAPI.getCurrentLocation(id!).then(res => res.data),
-    refetchInterval: 30000 // Actualizar cada 30 segundos
+    refetchInterval: 30000
   });
+
+  const { isConnected, latestSensorData, latestLocationData } = useRealTimeData(id);
+
+  const currentSensorData = latestSensorData || latestData;
+  const currentLocationData = latestLocationData || locationData;
 
   if (petLoading) return <div className="loading">Cargando perfil...</div>;
 
@@ -64,51 +72,57 @@ export default function PetProfile() {
         </div>
 
         <div className="sensor-data-card">
-          <h2>Datos en Tiempo Real</h2>
-          {latestData || locationData ? (
+          <div className="sensor-header">
+            <h2>Real-time Data</h2>
+            <div className={`connection-status ${isConnected ? 'connected' : 'disconnected'}`}>
+              {isConnected ? <Wifi size={16} /> : <WifiOff size={16} />}
+              <span>{isConnected ? 'Live' : 'Offline'}</span>
+            </div>
+          </div>
+          {currentSensorData || currentLocationData ? (
             <div className="sensor-grid">
               <div className="sensor-item">
                 <Heart className="sensor-icon" />
                 <div>
                   <span className="sensor-label">Ritmo Cardíaco</span>
-                  <span className="sensor-value">{latestData.heartRate || 'N/A'} bpm</span>
+                  <span className="sensor-value">{currentSensorData?.heartRate || 'N/A'} bpm</span>
                 </div>
               </div>
               <div className="sensor-item">
                 <Thermometer className="sensor-icon" />
                 <div>
                   <span className="sensor-label">Temperatura</span>
-                  <span className="sensor-value">{latestData.temperature || 'N/A'}°C</span>
+                  <span className="sensor-value">{currentSensorData?.temperature || 'N/A'}°C</span>
                 </div>
               </div>
               <div className="sensor-item">
                 <Activity className="sensor-icon" />
                 <div>
                   <span className="sensor-label">Actividad</span>
-                  <span className="sensor-value">{latestData.activityLevel || 'N/A'}/10</span>
+                  <span className="sensor-value">{currentSensorData?.activityLevel || 'N/A'}/10</span>
                 </div>
               </div>
               <div className="sensor-item">
                 <Battery className="sensor-icon" />
                 <div>
                   <span className="sensor-label">Batería</span>
-                  <span className="sensor-value">{latestData.batteryLevel || 'N/A'}%</span>
+                  <span className="sensor-value">{currentSensorData?.batteryLevel || 'N/A'}%</span>
                 </div>
               </div>
-              {(latestData?.latitude && latestData?.longitude) || locationData ? (
+              {(currentSensorData?.latitude && currentSensorData?.longitude) || currentLocationData ? (
                 <div className="sensor-item location">
                   <MapPin className="sensor-icon" />
                   <div>
                     <span className="sensor-label">Ubicación GPS</span>
                     <span className="sensor-value">
-                      {locationData ? 
-                        `${parseFloat(locationData.latitude).toFixed(4)}, ${parseFloat(locationData.longitude).toFixed(4)}` :
-                        `${latestData.latitude.toFixed(4)}, ${latestData.longitude.toFixed(4)}`
+                      {currentLocationData ? 
+                        `${parseFloat(currentLocationData.latitude).toFixed(4)}, ${parseFloat(currentLocationData.longitude).toFixed(4)}` :
+                        currentSensorData?.latitude ? `${currentSensorData.latitude.toFixed(4)}, ${currentSensorData.longitude.toFixed(4)}` : 'N/A'
                       }
                     </span>
-                    {locationData && (
+                    {currentLocationData && (
                       <span className="sensor-timestamp">
-                        Actualizado: {new Date(locationData.timestamp).toLocaleTimeString()}
+                        Updated: {new Date(currentLocationData.timestamp).toLocaleTimeString()}
                       </span>
                     )}
                   </div>
@@ -120,8 +134,21 @@ export default function PetProfile() {
           )}
         </div>
 
+        {currentLocationData && (
+          <div className="map-card">
+            <PetMap 
+              latitude={parseFloat(currentLocationData.latitude)}
+              longitude={parseFloat(currentLocationData.longitude)}
+              petName={pet?.name || 'Pet'}
+              timestamp={currentLocationData.timestamp}
+            />
+          </div>
+        )}
+
+        <PetCharts petId={id!} />
+
         <div className="stats-card">
-          <h2>Estadísticas (24h)</h2>
+          <h2>Statistics (24h)</h2>
           {stats ? (
             <div className="stats-grid">
               <div className="stat-item">
