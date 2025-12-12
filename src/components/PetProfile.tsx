@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { petsAPI, sensorAPI } from '../lib/api';
+import { petsAPI, sensorAPI, locationAPI } from '../lib/api';
 import { ArrowLeft, Heart, Thermometer, MapPin, Activity, Battery } from 'lucide-react';
 
 export default function PetProfile() {
@@ -20,6 +20,13 @@ export default function PetProfile() {
   const { data: stats } = useQuery({
     queryKey: ['pet-stats', id],
     queryFn: () => sensorAPI.getStats(id!).then(res => res.data)
+  });
+
+  // Location data from microservice
+  const { data: locationData } = useQuery({
+    queryKey: ['pet-location', id],
+    queryFn: () => locationAPI.getCurrentLocation(id!).then(res => res.data),
+    refetchInterval: 30000 // Actualizar cada 30 segundos
   });
 
   if (petLoading) return <div className="loading">Cargando perfil...</div>;
@@ -58,7 +65,7 @@ export default function PetProfile() {
 
         <div className="sensor-data-card">
           <h2>Datos en Tiempo Real</h2>
-          {latestData ? (
+          {latestData || locationData ? (
             <div className="sensor-grid">
               <div className="sensor-item">
                 <Heart className="sensor-icon" />
@@ -88,17 +95,25 @@ export default function PetProfile() {
                   <span className="sensor-value">{latestData.batteryLevel || 'N/A'}%</span>
                 </div>
               </div>
-              {latestData.latitude && latestData.longitude && (
+              {(latestData?.latitude && latestData?.longitude) || locationData ? (
                 <div className="sensor-item location">
                   <MapPin className="sensor-icon" />
                   <div>
-                    <span className="sensor-label">Ubicación</span>
+                    <span className="sensor-label">Ubicación GPS</span>
                     <span className="sensor-value">
-                      {latestData.latitude.toFixed(4)}, {latestData.longitude.toFixed(4)}
+                      {locationData ? 
+                        `${parseFloat(locationData.latitude).toFixed(4)}, ${parseFloat(locationData.longitude).toFixed(4)}` :
+                        `${latestData.latitude.toFixed(4)}, ${latestData.longitude.toFixed(4)}`
+                      }
                     </span>
+                    {locationData && (
+                      <span className="sensor-timestamp">
+                        Actualizado: {new Date(locationData.timestamp).toLocaleTimeString()}
+                      </span>
+                    )}
                   </div>
                 </div>
-              )}
+              ) : null}
             </div>
           ) : (
             <p>No hay datos recientes del collar</p>

@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { petsAPI } from '../lib/api';
 import { Heart, MapPin, Battery, Activity } from 'lucide-react';
+import Notifications from './Notifications';
 
 export default function Dashboard() {
   const [showAddPet, setShowAddPet] = useState(false);
@@ -112,6 +113,11 @@ export default function Dashboard() {
           </div>
         </div>
       )}
+
+      <div style={{background: 'white', padding: '1rem', margin: '1rem 0', borderRadius: '8px'}}>
+        <h3>🔔 Panel de Notificaciones (Debug)</h3>
+        <Notifications />
+      </div>
 
       <div className="pets-grid">
         {pets?.map((pet: any) => (

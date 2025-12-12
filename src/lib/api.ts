@@ -47,3 +47,15 @@ export const sensorAPI = {
   getStats: (petId: string, hours?: number) =>
     api.get(`/sensor-data/pet/${petId}/stats${hours ? `?hours=${hours}` : ''}`),
 };
+
+// Location API (via proxy)
+export const locationAPI = {
+  getCurrentLocation: (petId: string) => api.get(`/pets/${petId}/location`),
+  getLocationHistory: (petId: string) => api.get(`/pets/${petId}/location/history`),
+};
+
+// Notifications API (via proxy)
+export const notificationsAPI = {
+  getMyNotifications: () => api.get('/pets/my-notifications'),
+  getUnreadCount: () => api.get('/pets/my-notifications/unread-count'),
+};
