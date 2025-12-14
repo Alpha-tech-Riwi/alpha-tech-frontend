@@ -1,0 +1,323 @@
+.veterinary-dashboard {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.veterinary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.veterinary-header h2 {
+  color: #1f2937;
+  margin: 0;
+}
+
+.add-record-btn {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.add-record-btn:hover {
+  background: #059669;
+}
+
+.veterinary-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #6b7280;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e5e7eb;
+  border-top: 4px solid #10b981;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Health Summary */
+.health-summary {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.health-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.score-circle {
+  width: 100px;
+  height: 100px;
+  border: 6px solid;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.score-circle span {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.health-score h3 {
+  margin: 0;
+  color: #374151;
+}
+
+.health-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.stat-icon {
+  font-size: 24px;
+  margin-right: 12px;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-number {
+  font-size: 20px;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Upcoming Vaccinations */
+.upcoming-vaccinations {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.upcoming-vaccinations h3 {
+  margin: 0 0 16px 0;
+  color: #374151;
+}
+
+.vaccination-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.vaccination-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #fbbf24;
+  background: #fef3c7;
+}
+
+.vaccination-card.urgent {
+  border-color: #ef4444;
+  background: #fee2e2;
+}
+
+.vaccination-info {
+  display: flex;
+  align-items: center;
+}
+
+.vaccination-icon {
+  font-size: 20px;
+  margin-right: 12px;
+}
+
+.vaccination-info h4 {
+  margin: 0 0 4px 0;
+  color: #1f2937;
+}
+
+.vaccination-info p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.mark-complete-btn {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.mark-complete-btn:hover {
+  background: #059669;
+}
+
+/* Medical History */
+.medical-history {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.medical-history h3 {
+  margin: 0 0 20px 0;
+  color: #374151;
+}
+
+.no-records {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b7280;
+}
+
+.records-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.record-card {
+  display: flex;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f9fafb;
+  transition: box-shadow 0.2s;
+}
+
+.record-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.record-icon {
+  font-size: 24px;
+  margin-right: 16px;
+  flex-shrink: 0;
+}
+
+.record-content {
+  flex: 1;
+}
+
+.record-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.record-header h4 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 16px;
+}
+
+.record-date {
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.record-description {
+  margin: 0 0 12px 0;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+.record-details {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.record-details span {
+  font-size: 14px;
+  color: #6b7280;
+  background: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #e5e7eb;
+}
+
+@media (max-width: 768px) {
+  .veterinary-dashboard {
+    padding: 16px;
+  }
+  
+  .veterinary-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  
+  .health-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .vaccination-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  
+  .record-header {
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .record-details {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

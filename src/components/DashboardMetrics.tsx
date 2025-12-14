@@ -91,7 +91,7 @@ export default function DashboardMetrics() {
     return (
       <div className="metrics-loading">
         <Wifi className="animate-spin" size={24} />
-        <span>Cargando métricas...</span>
+        <span>Loading metrics...</span>
       </div>
     );
   }
@@ -126,7 +126,7 @@ export default function DashboardMetrics() {
         />
 
         <MetricCard
-          title="Batería Promedio"
+          title="Average Battery"
           value={`${metrics.avgBattery}%`}
           icon={<Battery size={24} />}
           status={metrics.avgBattery > 50 ? 'success' : metrics.avgBattery > 20 ? 'warning' : 'danger'}
@@ -142,7 +142,7 @@ export default function DashboardMetrics() {
         </div>
         <div className="summary-item">
           <Wifi size={16} />
-          <span>Última actualización: {new Date().toLocaleTimeString()}</span>
+          <span>Last update: {new Date().toLocaleTimeString()}</span>
         </div>
       </div>
     </div>

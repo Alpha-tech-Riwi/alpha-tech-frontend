@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard';
 import PetProfile from './components/PetProfile';
 import FoundPet from './components/FoundPet';
 import PWAInstall from './components/PWAInstall';
+import { QRRegistration } from './components/QRRegistration';
 import './App.css';
 import './components/FoundPet.css';
 
@@ -22,7 +23,7 @@ function App() {
   }, []);
 
   if (loading) {
-    return <div className="loading">Cargando Alpha Tech...</div>;
+    return <div className="loading">Loading Alpha Tech...</div>;
   }
 
   return (
@@ -51,6 +52,10 @@ function App() {
             <Route 
               path="/found/:qrCode" 
               element={<FoundPet />} 
+            />
+            <Route 
+              path="/test" 
+              element={<QRRegistration />} 
             />
             <Route 
               path="/" 

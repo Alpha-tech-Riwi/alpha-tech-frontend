@@ -12,7 +12,7 @@ export default function PetQRCode({ petId, petName, onClose }: PetQRCodeProps) {
   const [downloading, setDownloading] = useState(false);
 
   const qrCode = `PET${petId.substring(0, 8).toUpperCase()}`;
-  const url = `https://prefers-cheapest-blues-parental.trycloudflare.com/qr/found/${qrCode}`;
+  const url = `${import.meta.env.VITE_QR_SERVICE_URL || 'http://localhost:3004'}/found/${qrCode}`;
 
   const downloadQR = async () => {
     setDownloading(true);
@@ -45,7 +45,7 @@ export default function PetQRCode({ petId, petName, onClose }: PetQRCodeProps) {
         img.src = url;
       }
     } catch (error) {
-      console.error('Error downloading QR:', error);
+      // Error downloading QR
     }
     setDownloading(false);
   };
@@ -55,15 +55,15 @@ export default function PetQRCode({ petId, petName, onClose }: PetQRCodeProps) {
       try {
         await navigator.share({
           title: `QR de ${petName}`,
-          text: `Código QR para ${petName} - Alpha Tech`,
+          text: `QR Code for ${petName} - Alpha Tech`,
           url: url
         });
       } catch (error) {
-        console.log('Error sharing:', error);
+        // Error sharing
       }
     } else {
       navigator.clipboard.writeText(url);
-      alert('URL copiada al portapapeles');
+      // URL copied to clipboard
     }
   };
 
@@ -71,7 +71,7 @@ export default function PetQRCode({ petId, petName, onClose }: PetQRCodeProps) {
     <div className="qr-modal-overlay">
       <div className="qr-modal">
         <div className="qr-header">
-          <h3>🏷️ Código QR de {petName}</h3>
+          <h3>🏷️ QR Code for {petName}</h3>
           <button onClick={onClose} className="close-btn">
             <X size={24} />
           </button>
@@ -88,13 +88,13 @@ export default function PetQRCode({ petId, petName, onClose }: PetQRCodeProps) {
                 bgColor="#ffffff"
                 fgColor="#000000"
               />
-              <p className="qr-label">Código QR para {petName}</p>
+              <p className="qr-label">QR Code for {petName}</p>
             </div>
           </div>
 
           <div className="qr-info">
             <p className="qr-description">
-              Imprime este código QR y pégalo en el collar de <strong>{petName}</strong>
+              Print this QR code and attach it to <strong>{petName}</strong>'s collar
             </p>
             <div className="qr-url">
               <small>URL: {url}</small>
@@ -104,10 +104,10 @@ export default function PetQRCode({ petId, petName, onClose }: PetQRCodeProps) {
           <div className="qr-instructions">
             <h4>📋 Instrucciones:</h4>
             <ol>
-              <li>Descarga e imprime el código QR</li>
-              <li>Pégalo en el collar o placa de {petName}</li>
-              <li>Si alguien encuentra a tu mascota, podrá escanear el código</li>
-              <li>Recibirás una notificación inmediata con la ubicación</li>
+              <li>Download and print the QR code</li>
+              <li>Attach it to {petName}'s collar or tag</li>
+              <li>If someone finds your pet, they can scan the code</li>
+              <li>You'll receive an immediate notification with the location</li>
             </ol>
           </div>
 

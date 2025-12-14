@@ -1,9 +1,49 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://trim-detective-touch-conservative.trycloudflare.com';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+const LOCATION_API_URL = import.meta.env.VITE_LOCATION_API_URL || 'http://localhost:3002';
+const NOTIFICATION_API_URL = import.meta.env.VITE_NOTIFICATION_API_URL || 'http://localhost:3003';
+const QR_API_URL = import.meta.env.VITE_QR_API_URL || 'http://localhost:3004';
+const FILE_API_URL = import.meta.env.VITE_FILE_API_URL || 'http://localhost:3006';
+const AUTH_API_URL = import.meta.env.VITE_AUTH_API_URL || 'http://localhost:3005';
 
 export const api = axios.create({
   baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+export const locationAPI = axios.create({
+  baseURL: LOCATION_API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+export const notificationAPI = axios.create({
+  baseURL: NOTIFICATION_API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+export const qrAPI = axios.create({
+  baseURL: QR_API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+export const fileAPI = axios.create({
+  baseURL: FILE_API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+export const authServiceAPI = axios.create({
+  baseURL: AUTH_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -48,8 +88,8 @@ export const sensorAPI = {
     api.get(`/sensor-data/pet/${petId}/stats${hours ? `?hours=${hours}` : ''}`),
 };
 
-// Location API (via proxy)
-export const locationAPI = {
+// Location Service API
+export const locationServiceAPI = {
   getCurrentLocation: (petId: string) => api.get(`/pets/${petId}/location`),
   getLocationHistory: (petId: string) => api.get(`/pets/${petId}/location/history`),
 };
@@ -58,4 +98,24 @@ export const locationAPI = {
 export const notificationsAPI = {
   getMyNotifications: () => api.get('/pets/my-notifications'),
   getUnreadCount: () => api.get('/pets/my-notifications/unread-count'),
+};
+
+// QR Service API
+export const qrServiceAPI = {
+  registerQR: (petData: { petName: string; ownerName: string; phone: string }) =>
+    qrAPI.post('/qr/register', petData),
+  listQRs: () => qrAPI.get('/qr/list'),
+  getQRInfo: (qrCode: string) => qrAPI.get(`/found/${qrCode}`),
+};
+
+// File Service API
+export const fileServiceAPI = {
+  uploadFile: (formData: FormData) =>
+    fileAPI.post('/api/v1/files/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }),
+  getUserFiles: (userId: string) => fileAPI.get(`/api/v1/files/user/${userId}`),
+  getFile: (fileId: string) => fileAPI.get(`/api/v1/files/${fileId}`),
+  downloadFile: (fileId: string) => fileAPI.get(`/api/v1/files/${fileId}/download`),
+  deleteFile: (fileId: string) => fileAPI.delete(`/api/v1/files/${fileId}`),
 };

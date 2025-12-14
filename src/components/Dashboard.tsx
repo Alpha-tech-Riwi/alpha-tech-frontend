@@ -11,6 +11,13 @@ import './Dashboard.css';
 import './PetQRCode.css';
 
 export default function Dashboard() {
+  // Check authentication immediately
+  const token = localStorage.getItem('token');
+  if (!token) {
+    window.location.href = '/login';
+    return <div>Redirecting to login...</div>;
+  }
+
   const [showAddPet, setShowAddPet] = useState(false);
   const [showQR, setShowQR] = useState<{petId: string, petName: string} | null>(null);
   const [newPet, setNewPet] = useState({
@@ -22,11 +29,20 @@ export default function Dashboard() {
     collarId: ''
   });
 
-  const { data: pets, isLoading, refetch } = useQuery({
+  const { data: pets, isLoading, refetch, error } = useQuery({
     queryKey: ['pets'],
     queryFn: () => petsAPI.getMyPets().then(res => res.data),
-    refetchInterval: 30000
+    refetchInterval: 30000,
+    retry: false
   });
+
+  // Redirect to login if unauthorized
+  if (error && (error as any)?.response?.status === 401) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    window.location.href = '/login';
+    return null;
+  }
 
   // Obtener datos de sensores para cada mascota
   const petsWithSensorData = useQuery({

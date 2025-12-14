@@ -1,3 +1,83 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Brand Colors - Sophisticated Indigo/Violet Theme */
+  --primary-50: #eef2ff;
+  --primary-100: #e0e7ff;
+  --primary-200: #c7d2fe;
+  --primary-300: #a5b4fc;
+  --primary-400: #818cf8;
+  --primary-500: #6366f1;
+  --primary-600: #4f46e5;
+  --primary-700: #4338ca;
+  --primary-800: #3730a3;
+  --primary-900: #312e81;
+
+  /* Secondary Colors - Teal/Emerald for success/nature vibes */
+  --secondary-50: #f0fdfa;
+  --secondary-500: #14b8a6;
+  --secondary-600: #0d9488;
+
+  /* Accent - Amber/Orange for warnings/attention */
+  --accent-500: #f59e0b;
+  --accent-600: #d97706;
+
+  /* Danger */
+  --danger-500: #ef4444;
+  --danger-600: #dc2626;
+
+  /* Neutral / Grays (Slate) */
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+  --gray-900: #0f172a;
+
+  /* Surface & Backgrounds */
+  --bg-app: #f8fafc;
+  --surface-white: #ffffff;
+  --surface-glass: rgba(255, 255, 255, 0.7);
+  --surface-glass-strong: rgba(255, 255, 255, 0.9);
+  
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit', system-ui, -apple-system, sans-serif;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-glow: 0 0 15px rgba(99, 102, 241, 0.3);
+
+  /* Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark Mode Support (Future proofing) */
+@media (prefers-color-scheme: dark) {
+  /* :root {
+     --bg-app: #0f172a;
+     --surface-white: #1e293b;
+     --gray-900: #f8fafc;
+     ... would need to invert scale
+  } */
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -7,292 +87,70 @@
 html, body {
   width: 100%;
   height: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-sans);
+  background-color: var(--bg-app);
+  color: var(--gray-800);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
   width: 100%;
   min-height: 100vh;
-  margin: 0;
-  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--gray-900);
 }
 
 a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+  color: var(--primary-600);
+  text-decoration: none;
+  transition: color var(--transition-fast);
 }
 
 a:hover {
-  color: #535bf2;
+  color: var(--primary-700);
 }
 
-/* QR Code Modal Styles */
-.qr-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 20px;
+button {
+  font-family: var(--font-sans);
 }
 
-.qr-modal {
-  background: white;
-  border-radius: 12px;
-  max-width: 500px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-.qr-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  border-bottom: 1px solid #e5e7eb;
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.qr-header h3 {
-  margin: 0;
-  color: #1f2937;
-  font-size: 1.25rem;
-}
-
-.close-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 6px;
-  color: #6b7280;
-  transition: all 0.2s;
-}
-
-.close-btn:hover {
-  background: #f3f4f6;
-  color: #374151;
-}
-
-.qr-content {
-  padding: 20px;
-}
-
-.qr-code-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.qr-code-wrapper {
-  text-align: center;
-  padding: 20px;
-  background: #f9fafb;
-  border-radius: 12px;
-  border: 2px solid #e5e7eb;
-}
-
-.qr-code-wrapper svg {
-  border-radius: 8px;
-  background: white !important;
-  display: block;
-}
-
-.qr-label {
-  margin-top: 12px;
-  color: #374151;
-  font-weight: 500;
-  font-size: 0.9rem;
-}
-
-.qr-info {
-  margin-bottom: 20px;
-}
-
-.qr-description {
-  color: #4b5563;
-  margin-bottom: 12px;
-  line-height: 1.5;
-}
-
-.qr-url {
-  background: #f3f4f6;
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #d1d5db;
-}
-
-.qr-url small {
-  color: #6b7280;
-  font-family: monospace;
-  word-break: break-all;
-}
-
-.qr-instructions {
-  background: #eff6ff;
-  padding: 16px;
-  border-radius: 8px;
-  border-left: 4px solid #3b82f6;
-  margin-bottom: 20px;
-}
-
-.qr-instructions h4 {
-  color: #1e40af;
-  margin-bottom: 8px;
-  font-size: 0.95rem;
-}
-
-.qr-instructions ol {
-  color: #1e40af;
-  padding-left: 20px;
-}
-
-.qr-instructions li {
-  margin-bottom: 4px;
-  line-height: 1.4;
-}
-
-.qr-actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.btn-primary, .btn-secondary {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: none;
-  font-size: 0.9rem;
-}
-
-.btn-primary {
-  background: #3b82f6;
-  color: white;
-}
-
-.btn-primary:hover:not(:disabled) {
-  background: #2563eb;
-}
-
-.btn-primary:disabled {
-  background: #9ca3af;
-  cursor: not-allowed;
-}
-
-.btn-secondary {
-  background: #f3f4f6;
-  color: #374151;
-  border: 1px solid #d1d5db;
-}
-
-.btn-secondary:hover {
-  background: #e5e7eb;
-}
-
-@media (max-width: 640px) {
-  .qr-modal {
-    margin: 10px;
-    max-width: none;
-  }
-  
-  .qr-actions {
-    flex-direction: column;
-  }
-  
-  .btn-primary, .btn-secondary {
-    justify-content: center;
-  }
-}
-/* Lost Mode Button Styles */
-.pet-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.qr-btn, .lost-btn {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.qr-btn {
-  background: #3b82f6;
-  color: white;
-}
-
-.qr-btn:hover {
-  background: #2563eb;
-}
-
-.lost-btn {
-  background: #f59e0b;
-  color: white;
-  animation: pulse 2s infinite;
-}
-
-.lost-btn:hover {
-  background: #d97706;
-}
-
-.lost-btn.active {
-  background: #dc2626;
-  animation: blink 1s infinite;
-}
-
-.lost-btn.active:hover {
-  background: #b91c1c;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-@keyframes blink {
-  0%, 50% { opacity: 1; }
-  51%, 100% { opacity: 0.7; }
-}
-
-/* Pet card status for lost pets */
-.pet-card.lost {
-  border: 2px solid #dc2626;
-  background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
-}
-
-.pet-card.lost .pet-header h3 {
-  color: #dc2626;
-}
-
-.pet-card.lost::before {
-  content: "🚨 PERDIDO";
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background: #dc2626;
-  color: white;
-  padding: 4px 8px;
+::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
   border-radius: 4px;
-  font-size: 0.7rem;
-  font-weight: bold;
-  animation: blink 1s infinite;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-400);
+}
+
+/* Utility Classes */
+.glass-panel {
+  background: var(--surface-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: var(--shadow-lg);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary-600), var(--primary-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

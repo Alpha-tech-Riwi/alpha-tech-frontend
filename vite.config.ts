@@ -50,7 +50,7 @@ export default defineConfig({
     allowedHosts: [
       'localhost',
       '127.0.0.1',
-      'prefers-cheapest-blues-parental.trycloudflare.com',
+      'saying-nevertheless-cart-ticket.trycloudflare.com',
       '.trycloudflare.com'
     ],
     proxy: {

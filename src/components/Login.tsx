@@ -30,7 +30,7 @@ export default function Login({ onLogin }: LoginProps) {
       localStorage.setItem('user', JSON.stringify(response.data.user));
       onLogin();
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Error de autenticación');
+      setError(err.response?.data?.message || 'Authentication error');
     } finally {
       setLoading(false);
     }
@@ -39,21 +39,21 @@ export default function Login({ onLogin }: LoginProps) {
   return (
     <div className="login-container">
       <div className="login-card">
-        <h2>{isLogin ? 'Iniciar Sesión' : 'Registrarse'}</h2>
+        <h2>{isLogin ? 'Sign In' : 'Sign Up'}</h2>
         
         <form onSubmit={handleSubmit}>
           {!isLogin && (
             <>
               <input
                 type="text"
-                placeholder="Nombre"
+                placeholder="First Name"
                 value={formData.firstName}
                 onChange={(e) => setFormData({...formData, firstName: e.target.value})}
                 required
               />
               <input
                 type="text"
-                placeholder="Apellido"
+                placeholder="Last Name"
                 value={formData.lastName}
                 onChange={(e) => setFormData({...formData, lastName: e.target.value})}
                 required
@@ -71,7 +71,7 @@ export default function Login({ onLogin }: LoginProps) {
           
           <input
             type="password"
-            placeholder="Contraseña"
+            placeholder="Password"
             value={formData.password}
             onChange={(e) => setFormData({...formData, password: e.target.value})}
             required
@@ -80,18 +80,18 @@ export default function Login({ onLogin }: LoginProps) {
           {error && <div className="error">{error}</div>}
           
           <button type="submit" disabled={loading}>
-            {loading ? 'Cargando...' : (isLogin ? 'Iniciar Sesión' : 'Registrarse')}
+            {loading ? 'Loading...' : (isLogin ? 'Sign In' : 'Sign Up')}
           </button>
         </form>
         
         <p>
-          {isLogin ? '¿No tienes cuenta?' : '¿Ya tienes cuenta?'}
+          {isLogin ? "Don't have an account?" : 'Already have an account?'}
           <button 
             type="button" 
             className="link-button"
             onClick={() => setIsLogin(!isLogin)}
           >
-            {isLogin ? 'Registrarse' : 'Iniciar Sesión'}
+            {isLogin ? 'Sign Up' : 'Sign In'}
           </button>
         </p>
       </div>

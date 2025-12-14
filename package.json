@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.59.0",
-    "axios": "^1.7.7",
+    "axios": "^1.13.2",
     "chart.js": "^4.5.1",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.460.0",
@@ -31,14 +31,16 @@
     "@types/qrcode.react": "^1.0.5",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.2",
+    "@vitejs/plugin-legacy": "^5.4.2",
+    "@vitejs/plugin-react": "^4.3.4",
     "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
-    "typescript": "~5.9.3",
+    "terser": "^5.44.1",
+    "typescript": "~5.6.3",
     "typescript-eslint": "^8.46.4",
-    "vite": "^7.2.4"
+    "vite": "^5.4.11"
   }
 }
