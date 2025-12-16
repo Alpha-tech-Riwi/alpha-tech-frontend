@@ -1,41 +1,46 @@
 # Alpha Tech Frontend
 
-Interfaz web para la plataforma social de collares inteligentes.
+Web interface for the smart pet collar social platform.
 
-## 🚀 Inicio Rápido
+## 🚀 Quick Start
 
 ```bash
-# Con Docker
+# With Docker
 docker-compose up -d
 
-# Desarrollo local
+# Local development
 npm install
 npm run dev
 ```
 
-## 🌐 Acceso
+## 🌐 Access
 
-- **Desarrollo:** http://localhost:5173
+- **Development:** http://localhost:5173
 - **API Backend:** http://localhost:3000
 
-## ✨ Funcionalidades
+## ✨ Features
 
-- Dashboard de mascotas
-- Datos en tiempo real
-- Perfiles detallados
-- Autenticación completa
-- Diseño responsivo
+- Pet dashboard
+- Real-time data
+- Detailed profiles
+- Complete authentication
+- Responsive design
+- Real-time collar location tracking
+- Interactive maps with geofencing
+- ESP32 collar control
 
-## 🔧 Variables de Entorno
+## 🔧 Environment Variables
 
 ```env
 VITE_API_URL=http://localhost:3000
+VITE_LOCATION_API_URL=http://localhost:3002
 ```
 
-## 🏗️ Stack Técnico
+## 🏗️ Tech Stack
 
 - React 19 + TypeScript
 - Vite + SWC
 - React Router
 - TanStack Query
 - Lucide Icons
+- Leaflet Maps
