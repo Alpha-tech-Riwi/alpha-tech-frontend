@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-const LOCATION_API_URL = import.meta.env.VITE_LOCATION_API_URL || 'http://localhost:3002';
-const NOTIFICATION_API_URL = import.meta.env.VITE_NOTIFICATION_API_URL || 'http://localhost:3003';
-const QR_API_URL = import.meta.env.VITE_QR_API_URL || 'http://localhost:3004';
-const FILE_API_URL = import.meta.env.VITE_FILE_API_URL || 'http://localhost:3006';
-const AUTH_API_URL = import.meta.env.VITE_AUTH_API_URL || 'http://localhost:3005';
+const API_URL = import.meta.env.VITE_API_URL || 'https://executive-cent-reliability-eva.trycloudflare.com';
+const LOCATION_API_URL = import.meta.env.VITE_LOCATION_API_URL || 'https://pacific-fighter-missile-stuffed.trycloudflare.com';
+const NOTIFICATION_API_URL = import.meta.env.VITE_NOTIFICATION_API_URL || 'https://needs-psi-peak-discharge.trycloudflare.com';
+const QR_API_URL = import.meta.env.VITE_QR_API_URL || 'https://qr-service-tunnel.trycloudflare.com';
+const FILE_API_URL = import.meta.env.VITE_FILE_API_URL || 'https://file-service-tunnel.trycloudflare.com';
+const AUTH_API_URL = import.meta.env.VITE_AUTH_API_URL || 'https://auth-service-tunnel.trycloudflare.com';
 
 export const api = axios.create({
   baseURL: API_URL,
@@ -92,6 +92,9 @@ export const sensorAPI = {
 export const locationServiceAPI = {
   getCurrentLocation: (petId: string) => api.get(`/pets/${petId}/location`),
   getLocationHistory: (petId: string) => api.get(`/pets/${petId}/location/history`),
+  // Direct location service API
+  getCurrentLocationByCollar: (collarId: string) => locationAPI.get(`/location/collar/${collarId}/current`),
+  getLocationHistoryByCollar: (collarId: string) => locationAPI.get(`/location/collar/${collarId}/history`),
 };
 
 // Notifications API (via proxy)

@@ -1,10 +1,13 @@
 import { useParams, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { petsAPI, sensorAPI, locationAPI } from '../lib/api';
+import { petsAPI, sensorAPI } from '../lib/api';
 import { ArrowLeft, Heart, Thermometer, MapPin, Activity, Battery, Wifi, WifiOff } from 'lucide-react';
 import PetMap from './PetMap';
 import PetCharts from './PetCharts';
+import CollarControl from './CollarControl';
+import CollarAssignment from './CollarAssignment';
 import { useRealTimeData } from '../hooks/useRealTimeData';
+import { usePetLocation } from '../hooks/usePetLocation';
 
 export default function PetProfile() {
   const { id } = useParams<{ id: string }>();
@@ -25,12 +28,8 @@ export default function PetProfile() {
     queryFn: () => sensorAPI.getStats(id!).then(res => res.data)
   });
 
-  // Location data from microservice
-  const { data: locationData } = useQuery({
-    queryKey: ['pet-location', id],
-    queryFn: () => locationAPI.getCurrentLocation(id!).then(res => res.data),
-    refetchInterval: 30000
-  });
+  // Location data from collar service
+  const { locationData, collarId, hasCollar } = usePetLocation(id!);
 
   const { isConnected, latestSensorData, latestLocationData } = useRealTimeData(id);
 
@@ -66,7 +65,7 @@ export default function PetProfile() {
               <strong>Peso:</strong> {pet?.weight} kg
             </div>
             <div className="info-item">
-              <strong>Collar ID:</strong> {pet?.collarId}
+              <strong>Collar ID:</strong> {collarId || pet?.collarId || 'Not assigned'}
             </div>
           </div>
         </div>
@@ -113,7 +112,7 @@ export default function PetProfile() {
                 <div className="sensor-item location">
                   <MapPin className="sensor-icon" />
                   <div>
-                    <span className="sensor-label">Ubicación GPS</span>
+                    <span className="sensor-label">GPS Location</span>
                     <span className="sensor-value">
                       {currentLocationData ? 
                         `${parseFloat(currentLocationData.latitude).toFixed(4)}, ${parseFloat(currentLocationData.longitude).toFixed(4)}` :
@@ -130,20 +129,45 @@ export default function PetProfile() {
               ) : null}
             </div>
           ) : (
-            <p>No hay datos recientes del collar</p>
+            <p>No recent collar data available</p>
           )}
         </div>
 
-        {currentLocationData && (
+        {(currentLocationData || locationData) && (
           <div className="map-card">
             <PetMap 
-              latitude={parseFloat(currentLocationData.latitude)}
-              longitude={parseFloat(currentLocationData.longitude)}
+              latitude={parseFloat((currentLocationData || locationData)!.latitude)}
+              longitude={parseFloat((currentLocationData || locationData)!.longitude)}
               petName={pet?.name || 'Pet'}
-              timestamp={currentLocationData.timestamp}
+              timestamp={(currentLocationData || locationData)!.timestamp}
             />
           </div>
         )}
+        
+        {!currentLocationData && !locationData && hasCollar && (
+          <div className="map-card">
+            <div className="no-location-message">
+              <MapPin size={48} />
+              <h3>Waiting for collar location...</h3>
+              <p>Collar {collarId} is assigned but hasn't sent location yet.</p>
+              <p>Press "FIND MY PET" to activate the collar.</p>
+            </div>
+          </div>
+        )}
+        
+        {!hasCollar && (
+          <div className="map-card">
+            <div className="no-collar-message">
+              <MapPin size={48} />
+              <h3>No collar assigned</h3>
+              <p>Assign an ESP32 collar to see real-time location.</p>
+            </div>
+          </div>
+        )}
+
+        <CollarAssignment petId={id!} petName={pet?.name || 'Pet'} currentCollarId={pet?.collarId} />
+        
+        <CollarControl petId={id!} petName={pet?.name || 'Pet'} />
 
         <PetCharts petId={id!} />
 
